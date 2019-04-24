@@ -80,9 +80,27 @@ def find_room_and_options():
                 d = getattr(room[i], x, False)
                 button = x.split('_')[0]
                 if(d is not False):
-                    print(f'For {d.name} press [{button}], {d.description}')
+                    print(f'For {d.name} press [{button}], {d.name} description - {d.description}')
+            return room[i]
+
+def move_player(cr, move):
+    m = move + '_to'
+    d = getattr(cr, m)
+    player1.current_room = d.name
+    return player1
+        
+
+def game():
+    found_treasure_room = False
+    while found_treasure_room is False:
+        current_room = find_room_and_options()
+        move = input('Enter the direction you would like to go, [n] [s] [e] or [w]')
+        player = move_player(current_room, move)
+        print(f'{player.name}! is now in the {player.current_room}')
+        if(player.current_room == 'Treasure Chamber'):
+            found_treasure_room = True
+
 
 print(f'Current place - {player1.current_room}')
-# find_room_and_options()
-move = input('Enter the direction you would like to go, [n] [s] [e] or [w]')
-print(move)
+game()
+print(f'Congrats {player1.name}! You found the treasure room!')
