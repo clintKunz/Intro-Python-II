@@ -6,10 +6,6 @@ class Room:
         self.name = name
         self.description = description
         self.items = []
-        self.n_to = None
-        self.s_to = None
-        self.e_to = None
-        self.w_to = None
 
     def add_item(self, item):
         self.items.append(item)
@@ -18,3 +14,9 @@ class Room:
     def remove_item(self, item):
         self.items.remove(item)
         print(f'{self.name} had a {item.name} removed from it')
+
+    def show_items(self, item):
+        if len(self.items) > 0:
+            print('Here are the items in this room:')
+            for i in self.items:
+                print(f'{i.name}')

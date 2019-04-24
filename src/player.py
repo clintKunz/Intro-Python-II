@@ -5,6 +5,9 @@ class Player:
         self.name = name
         self.current_room = current_room
         self.itemsBag = []
+
+    def __str__(self):
+        return str(f'{self.name}, {self.current_room}')
     
     def pick_up_item(self, item):
         self.itemsBag.append(item)
