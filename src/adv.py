@@ -1,6 +1,7 @@
 import time
 import textwrap
 
+from colorama import Fore, Style, Back
 from room import Room
 from player import Player
 from item import Item
@@ -52,13 +53,14 @@ room['treasure'].s_to = room['narrow']
 
 #
 # Main
-# 
+# Style - commands = white, options = magenta, info = cyan
 
 # Make a new player object that is currently in the 'outside' room.
 player1 = Player('Daniel', 'Outside Cave Entrance')
-print(f'Hi, {player1.name}!')
+print(f'{Fore.CYAN}Hi, {player1.name}! {Style.RESET_ALL}')
 # time.sleep(2)
-print('Follow the prompts to get to the treasure room to find the treasure box')
+print(Fore.WHITE + 'Follow the prompts to get to the treasure room, be sure to pick up any items along the way' + Style.RESET_ALL)
+print()
 # time.sleep(2)
 
 # Write a loop that:
@@ -73,14 +75,17 @@ print('Follow the prompts to get to the treasure room to find the treasure box')
 def find_room_and_options():
     for i in room:
         if player1.current_room == room[i].name:
-            print(f'Current description - {room[i].description}')
+            print(f'{Fore.CYAN}Current description - {room[i].description}')
+            print()
             print('Which way would you like to go?')
-            print('Here are your options')
+            print('Here are your options' + Style.RESET_ALL)
+            print()
             for x in ['n_to', 's_to', 'e_to', 'w_to']:
                 d = getattr(room[i], x, False)
                 button = x.split('_')[0]
                 if(d is not False):
-                    print(f'For {d.name} press [{button}], {d.name} description - {d.description}')
+                    print(f'{Fore.MAGENTA}For {d.name} press [{button}], {d.name} description - {d.description}{Style.RESET_ALL}')
+                    print()
             return room[i]
 
 def move_player(cr, move):
@@ -94,13 +99,16 @@ def game():
     found_treasure_room = False
     while found_treasure_room is False:
         current_room = find_room_and_options()
-        move = input('Enter the direction you would like to go, [n] [s] [e] or [w]')
+        move = input(Fore.WHITE + 'Enter the direction you would like to go, [n] [s] [e] or [w]' + Style.RESET_ALL)
         player = move_player(current_room, move)
-        print(f'{player.name}! is now in the {player.current_room}')
+        print()
+        print(f'{Fore.CYAN}{player.name}! is now in the {player.current_room}{Style.RESET_ALL}')
         if(player.current_room == 'Treasure Chamber'):
             found_treasure_room = True
 
 
-print(f'Current place - {player1.current_room}')
+print(f'{Fore.CYAN}Current place - {player1.current_room}{Style.RESET_ALL}')
 game()
-print(f'Congrats {player1.name}! You found the treasure room!')
+print()
+print(f'{Fore.YELLOW}Congrats {player1.name}! You found the treasure room!')
+print()
