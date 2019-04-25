@@ -109,18 +109,30 @@ def get_drop_items(d):
         for i in d.items:
             print(i.name)
         print()
-        get_drop = input(Fore.WHITE + 'If you want to pick up an item (you can only pick up one item per visit), type [y] [item name], otherwise type [n]').split()
+        get = input(Fore.WHITE + 'If you want to pick up an item (you can only pick up one item per visit), type [y] [item name], otherwise type [n]').split()
         print()
-        if get_drop[0] == 'y':
-            player1.pick_up_item(item[get_drop[1]])
-            d.remove_item(item[get_drop[1]])
+        if get[0] == 'y':
+            player1.pick_up_item(item[get[1]])
+            d.remove_item(item[get[1]])
+            time.sleep(2)
+            print()
+
+    if(len(player1.itemsBag) > 0):
+        print()
+        print(f'{Fore.CYAN}You have the following items in your bag')
+        for i in player1.itemsBag:
+            print(i.name)
+        print()
+        drop = input(Fore.WHITE + 'If you want to drop an item, type [y] [item name] otherwise type [n]').split()
+        print()
+        if drop[0] == 'y':
+            player1.drop_item(item[drop[1]])
+            d.add_item(item[drop[1]])
             time.sleep(2)
             print()
             return True
-        else:     
+        else:
             return True
-    else:
-        return True
 
 def game():
     found_treasure_room = False
