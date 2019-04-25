@@ -30,13 +30,9 @@ earlier adventurers. The only exit is to the south."""),
 
 item = {
     'glasses': Item('glasses', 'helps you see'),
-
     'watch': Item('watch', 'tells time'),
-
     'computer': Item('computer', 'can do all sorts of things'),
-
     'pen': Item('pen', 'writes poetry'),
-
     'skeletons': Item('skeletons', 'dead stuff')
 }
 
@@ -99,8 +95,32 @@ def move_player(cr, move):
     m = move + '_to'
     d = getattr(cr, m)
     player1.current_room = d.name
+    print()
+    print(f'{Fore.CYAN}{player1.name}! is now in the {player1.current_room}{Style.RESET_ALL}')
+    done = False
+    while done == False:
+        done = get_drop_items(d)
     return player1
-        
+
+def get_drop_items(d):
+    if(len(d.items) > 0):
+        print()
+        print(f'{Fore.CYAN}The {d.name} has the following items')
+        for i in d.items:
+            print(i.name)
+        print()
+        get_drop = input(Fore.WHITE + 'If you want to pick up an item (you can only pick up one item per visit), type [y] [item name], otherwise type [n]').split()
+        print()
+        if get_drop[0] == 'y':
+            player1.pick_up_item(item[get_drop[1]])
+            d.remove_item(item[get_drop[1]])
+            time.sleep(2)
+            print()
+            return True
+        else:     
+            return True
+    else:
+        return True
 
 def game():
     found_treasure_room = False
@@ -108,14 +128,12 @@ def game():
         current_room = find_room_and_options()
         move = input(Fore.WHITE + 'Enter the direction you would like to go, [n] [s] [e] or [w]' + Style.RESET_ALL)
         player = move_player(current_room, move)
-        print()
-        print(f'{Fore.CYAN}{player.name}! is now in the {player.current_room}{Style.RESET_ALL}')
         if(player.current_room == 'Treasure Chamber'):
             found_treasure_room = True
 
 # Start of game
-# print(f'{Fore.CYAN}Current place - {player1.current_room}{Style.RESET_ALL}')
-# game()
-# print()
-# print(f'{Fore.YELLOW}Congrats {player1.name}! You found the treasure room!')
-# print()
+print(f'{Fore.CYAN}Current place - {player1.current_room}{Style.RESET_ALL}')
+game()
+print()
+print(f'{Fore.YELLOW}Congrats {player1.name}! You found the treasure room!')
+print()
