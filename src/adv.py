@@ -82,6 +82,7 @@ def find_room_and_options():
             print()
             print('Which way would you like to go?')
             print('Here are your options' + Style.RESET_ALL)
+            time.sleep(1)
             print()
             for x in ['n_to', 's_to', 'e_to', 'w_to']:
                 d = getattr(room[i], x, False)
@@ -97,6 +98,7 @@ def move_player(cr, move):
     player1.current_room = d.name
     print()
     print(f'{Fore.CYAN}{player1.name}! is now in the {player1.current_room}{Style.RESET_ALL}')
+    time.sleep(2)
     done = False
     while done == False:
         done = get_drop_items(d)
@@ -109,9 +111,9 @@ def get_drop_items(d):
         for i in d.items:
             print(i.name)
         print()
-        get = input(Fore.WHITE + 'If you want to pick up an item (you can only pick up one item per visit), type [y] [item name], otherwise type [n]').split()
+        get = input(Fore.WHITE + 'If you want to pick up an item (you can only pick up one item per visit), type [get] [item name], otherwise type [no]').split()
         print()
-        if get[0] == 'y':
+        if get[0] == 'get':
             player1.pick_up_item(item[get[1]])
             d.remove_item(item[get[1]])
             time.sleep(2)
@@ -123,9 +125,9 @@ def get_drop_items(d):
         for i in player1.itemsBag:
             print(i.name)
         print()
-        drop = input(Fore.WHITE + 'If you want to drop an item, type [y] [item name] otherwise type [n]').split()
+        drop = input(Fore.WHITE + 'If you want to drop an item, type [drop] [item name] otherwise type [no]').split()
         print()
-        if drop[0] == 'y':
+        if drop[0] == 'drop':
             player1.drop_item(item[drop[1]])
             d.add_item(item[drop[1]])
             time.sleep(2)
@@ -138,6 +140,7 @@ def game():
     found_treasure_room = False
     while found_treasure_room is False:
         current_room = find_room_and_options()
+        time.sleep(2)
         move = input(Fore.WHITE + 'Enter the direction you would like to go, [n] [s] [e] or [w]' + Style.RESET_ALL)
         player = move_player(current_room, move)
         if(player.current_room == 'Treasure Chamber'):
@@ -145,7 +148,9 @@ def game():
 
 # Start of game
 print(f'{Fore.CYAN}Current place - {player1.current_room}{Style.RESET_ALL}')
+time.sleep(2)
 game()
 print()
+time.sleep(1)
 print(f'{Fore.YELLOW}Congrats {player1.name}! You found the treasure room!')
 print()
