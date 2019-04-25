@@ -37,7 +37,7 @@ item = {
 
     'pen': Item('pen', 'writes poetry'),
 
-    'treasure box': Item('treasure box', 'a box full of gold')
+    'skeletons': Item('skeletons', 'dead stuff')
 }
 
 # Link rooms together
@@ -51,7 +51,14 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
+# Place items in rooms
+
+room['foyer'].items.append(item['watch'])
+room['foyer'].items.append(item['glasses'])
+room['overlook'].items.append(item['pen'])
+room['narrow'].items.append(item['computer'])
+room['treasure'].items.append(item['skeletons'])
+
 # Main
 # Style - commands = white, options = magenta, info = cyan
 
@@ -106,9 +113,9 @@ def game():
         if(player.current_room == 'Treasure Chamber'):
             found_treasure_room = True
 
-
-print(f'{Fore.CYAN}Current place - {player1.current_room}{Style.RESET_ALL}')
-game()
-print()
-print(f'{Fore.YELLOW}Congrats {player1.name}! You found the treasure room!')
-print()
+# Start of game
+# print(f'{Fore.CYAN}Current place - {player1.current_room}{Style.RESET_ALL}')
+# game()
+# print()
+# print(f'{Fore.YELLOW}Congrats {player1.name}! You found the treasure room!')
+# print()
